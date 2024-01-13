@@ -11,7 +11,7 @@ import XCTest
 final class MovieRepositoryTests: XCTestCase {
     @available(iOS 16.0, *)
     func testURLCreation() {
-        let sut = DefaultMovieRepository(apiKey: "APIKEY")
+        let sut = DefaultMovieRepository(APIKey: "APIKEY")
 
         let url = sut.url(for: .popular)
 
@@ -20,7 +20,24 @@ final class MovieRepositoryTests: XCTestCase {
     }
     
     func testDecodingMovie() throws {
-        // TODO: Implement decoding test.
+        let sut = DefaultMovieRepository(APIKey: "APIKEY")
+        let data = exampleResponse.data(using: .utf8)!
+        
+        let response = try sut.decode(data: data)
+        
+        XCTAssertEqual(response.results.count, 2)
+        
+        guard let movie = response.results.first else {
+            XCTFail("Missing results")
+            return
+        }
+        
+        XCTAssertEqual(movie.id, 753342)
+        XCTAssertEqual(movie.title, "Napoleon")
+        XCTAssertFalse(movie.overview.isEmpty)
+        XCTAssertEqual(movie.genreIds, [36, 10752, 18])
+        XCTAssertEqual(movie.posterPath, "/f1AQhx6ZfGhPZFTVKgxG91PhEYc.jpg")
+        XCTAssertEqual(movie.popularity, 1529.676)
     }
 }
 

@@ -23,8 +23,8 @@ final class DefaultMovieRepository: MovieRepository {
     private let apiKey: String
     private let baseURL = "https://api.themoviedb.org/3"
     
-    init(apiKey: String) {
-        self.apiKey = apiKey
+    init(APIKey: String) {
+        self.apiKey = APIKey
     }
     
     func fetchMovies() async throws -> [Movie] {

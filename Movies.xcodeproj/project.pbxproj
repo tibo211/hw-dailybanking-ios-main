@@ -21,6 +21,7 @@
 		9FE3722427BACC3400A0D8BD /* AsnycImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE3722327BACC3400A0D8BD /* AsnycImage.swift */; };
 		9FE3723727BF9C4E00A0D8BD /* APIkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE3723627BF9C4E00A0D8BD /* APIkey.swift */; };
 		BB79542A2B530A5F0071A9CC /* MovieData in Frameworks */ = {isa = PBXBuildFile; productRef = BB7954292B530A5F0071A9CC /* MovieData */; };
+		BB79542D2B534EFF0071A9CC /* MovieServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB79542C2B534EFF0071A9CC /* MovieServices.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		9FE3722327BACC3400A0D8BD /* AsnycImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsnycImage.swift; sourceTree = "<group>"; };
 		9FE3723627BF9C4E00A0D8BD /* APIkey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIkey.swift; sourceTree = "<group>"; };
 		BB7954272B530A490071A9CC /* MovieData */ = {isa = PBXFileReference; lastKnownFileType = text; path = MovieData; sourceTree = SOURCE_ROOT; };
+		BB79542C2B534EFF0071A9CC /* MovieServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieServices.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 		9FB3BA1327BAAEE4002CD259 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				BB79542B2B534EE30071A9CC /* Services */,
 				9FB3BA1627BAAF0F002CD259 /* Common */,
 				9FB3BA1527BAAF01002CD259 /* MovieDetails */,
 				9FB3BA1427BAAEF6002CD259 /* MovieList */,
@@ -136,6 +139,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BB79542B2B534EE30071A9CC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				BB79542C2B534EFF0071A9CC /* MovieServices.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,6 +232,7 @@
 				9FB3BA1227BA7A94002CD259 /* MovieListItem.swift in Sources */,
 				9F477C0E27BA5CF800DAE295 /* MoviesScreen.swift in Sources */,
 				9F477C0C27BA5CF800DAE295 /* MoviesApp.swift in Sources */,
+				BB79542D2B534EFF0071A9CC /* MovieServices.swift in Sources */,
 				9FB3BA1827BAAF58002CD259 /* MoviesScreenViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
