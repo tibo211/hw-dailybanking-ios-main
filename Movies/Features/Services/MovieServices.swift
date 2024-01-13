@@ -16,6 +16,20 @@ final class MovieServices {
     
     func fetchMovies() async throws -> [MovieVM] {
         let movies = try await repository.fetchMovies()
-        return []
+        return movies
+            .map { movie in convert(movie: movie) }
+    }
+    
+    func convert(movie: Movie) -> MovieVM {
+        MovieVM(
+            id: String(movie.id),
+            title: movie.title,
+            genres: "",
+            overView: movie.overview,
+            image: .init(small: movie.smallImageLink,
+                         large: movie.largeImageLink),
+            popularity: movie.popularity,
+            isMarked: false
+        )
     }
 }

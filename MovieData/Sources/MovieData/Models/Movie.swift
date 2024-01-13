@@ -6,18 +6,18 @@
 //
 
 public struct Movie: Decodable {
-    let id: Int
-    let title: String
-    let overview: String
-    let genreIds: [Int]
+    public let id: Int
+    public let title: String
+    public let overview: String
+    public let genreIds: [Int]
+    public let popularity: Float
     let posterPath: String
-    let popularity: Double
     
-    var smallImageLink: String {
+    public var smallImageLink: String {
         "https://image.tmdb.org/t/p/w185/\(posterPath)"
     }
     
-    var largeImageLink: String {
+    public var largeImageLink: String {
         "https://image.tmdb.org/t/p/w500/\(posterPath)"
     }
 }

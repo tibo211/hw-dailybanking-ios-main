@@ -7,6 +7,16 @@
 
 import Foundation
 
-class MoviesScreenViewModel: ObservableObject, MoviesScreenViewModelProtocol {
-    @Published var movies: [MovieVM] = []
+final class MoviesScreenViewModel: ObservableObject, MoviesScreenViewModelProtocol {
+    @Published private(set) var movies: [MovieVM] = []
+    
+    private let movieServices = MovieServices()
+    
+    func fetchMovies() async {
+        let movies = try? await movieServices.fetchMovies() 
+        
+        await MainActor.run {
+            self.movies = movies ?? []
+        }
+    }
 }

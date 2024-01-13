@@ -9,6 +9,8 @@ import Foundation
 
 class MockViewModel: MoviesScreenViewModelProtocol {
     var movies: [MovieVM] = previewMovies
+    
+    func fetchMovies() async {}
 }
 
 class MockMovieDetailsViewModel: MovieDetailsScreenViewModelProtocol {

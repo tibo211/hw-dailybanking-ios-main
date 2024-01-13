@@ -9,6 +9,8 @@ import SwiftUI
 
 protocol MoviesScreenViewModelProtocol: ObservableObject {
     var movies: [MovieVM] { get }
+
+    func fetchMovies() async
 }
 
 struct MoviesScreen<ViewModel: MoviesScreenViewModelProtocol>: View {
@@ -27,6 +29,9 @@ struct MoviesScreen<ViewModel: MoviesScreenViewModelProtocol>: View {
             .navigationTitle("Movies")
         }
         .navigationViewStyle(.stack)
+        .task {
+            await viewModel.fetchMovies()
+        }
     }
 
     func destinationView(using movie: MovieVM) -> some View {
