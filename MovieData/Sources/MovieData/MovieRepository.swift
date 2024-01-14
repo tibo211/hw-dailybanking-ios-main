@@ -8,16 +8,31 @@
 import Foundation
 
 public protocol MovieRepository {
-    func fetchMovies() async throws -> [Movie]
+    func fetchPopularMovies() async throws -> [Movie]
+    func fetchGenres() async throws -> [Int : String]
 }
 
-struct FetchMoviesResponse: Decodable {
+// MARK: - API Responses.
+
+struct FetchPopularMoviesResponse: Decodable {
     let results: [Movie]
 }
+
+struct FetchGenresResponse: Decodable {
+    struct Genre: Decodable {
+        let id: Int
+        let name: String
+    }
+
+    let genres: [Genre]
+}
+
+// MARK: - Default implementation.
 
 final class DefaultMovieRepository: MovieRepository {
     enum Endpoint: String {
         case popular = "/movie/popular"
+        case genres = "/genre/movie/list"
     }
     
     private let apiKey: String
@@ -27,15 +42,26 @@ final class DefaultMovieRepository: MovieRepository {
         self.apiKey = APIKey
     }
     
-    func fetchMovies() async throws -> [Movie] {
+    func fetchPopularMovies() async throws -> [Movie] {
         let url = url(for: .popular)
-        // Request.
+
         let (data, _) = try await URLSession.shared.data(from: url)
-        // Decode.
-        let response = try decode(data: data)
+
+        let response = try decodeMovies(data: data)
         return response.results
     }
     
+    func fetchGenres() async throws -> [Int : String] {
+        let url = url(for: .genres)
+        
+        let (data, _) = try await URLSession.shared.data(from: url)
+        
+        let results = try decodeGenres(data: data)
+        return results
+    }
+}
+
+extension DefaultMovieRepository {
     func url(for endpoint: Endpoint) -> URL {
         var components = URLComponents(string: baseURL + endpoint.rawValue)
         
@@ -46,9 +72,15 @@ final class DefaultMovieRepository: MovieRepository {
         return components!.url!
     }
     
-    func decode(data: Data) throws -> FetchMoviesResponse {
+    func decodeMovies(data: Data) throws -> FetchPopularMoviesResponse {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return try decoder.decode(FetchMoviesResponse.self, from: data)
+        return try decoder.decode(FetchPopularMoviesResponse.self, from: data)
+    }
+    
+    func decodeGenres(data: Data) throws -> [Int : String] {
+        let response = try JSONDecoder().decode(FetchGenresResponse.self, from: data)
+        return Dictionary(grouping: response.genres, by: \.id)
+            .compactMapValues(\.first?.name)
     }
 }

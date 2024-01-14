@@ -6,6 +6,7 @@
 //
 
 import MovieData
+import Foundation
 
 final class MovieServices {
     let repository: MovieRepository
@@ -15,16 +16,20 @@ final class MovieServices {
     }
     
     func fetchMovies() async throws -> [MovieVM] {
-        let movies = try await repository.fetchMovies()
+        let genres = try await repository.fetchGenres()
+        let movies = try await repository.fetchPopularMovies()
+
         return movies
-            .map { movie in convert(movie: movie) }
+            .map { movie in convert(movie: movie, genres: genres) }
     }
     
-    func convert(movie: Movie) -> MovieVM {
-        MovieVM(
+    func convert(movie: Movie, genres: [Int : String]) -> MovieVM {
+        let genres = movie.genreIds.compactMap { genres[$0] }
+
+        return MovieVM(
             id: String(movie.id),
             title: movie.title,
-            genres: "",
+            genres: ListFormatter().string(from: genres) ?? "",
             overView: movie.overview,
             image: .init(small: movie.smallImageLink,
                          large: movie.largeImageLink),

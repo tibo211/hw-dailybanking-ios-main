@@ -9,21 +9,34 @@ import XCTest
 @testable import MovieData
 
 final class MovieRepositoryTests: XCTestCase {
-    @available(iOS 16.0, *)
-    func testURLCreation() {
+    func testURL_createPopular() {
         let sut = DefaultMovieRepository(APIKey: "APIKEY")
 
         let url = sut.url(for: .popular)
 
-        let urlToExpect = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=APIKEY")
+        let urlToExpect = URL(
+            string: "https://api.themoviedb.org/3/movie/popular?api_key=APIKEY"
+        )
         XCTAssertEqual(url, urlToExpect)
     }
     
-    func testDecodingMovie() throws {
+    func testURL_createGenres() {
         let sut = DefaultMovieRepository(APIKey: "APIKEY")
-        let data = exampleResponse.data(using: .utf8)!
         
-        let response = try sut.decode(data: data)
+        let url = sut.url(for: .genres)
+        
+        let urlToExpect = URL(
+            string: "https://api.themoviedb.org/3/genre/movie/list?api_key=APIKEY"
+        )
+        XCTAssertEqual(url, urlToExpect)
+    }
+    
+    func testDecodeMovies() throws {
+        let sut = DefaultMovieRepository(APIKey: "APIKEY")
+        let data = popularMoviesExampleResponse
+            .data(using: .utf8)!
+        
+        let response = try sut.decodeMovies(data: data)
         
         XCTAssertEqual(response.results.count, 2)
         
@@ -36,12 +49,24 @@ final class MovieRepositoryTests: XCTestCase {
         XCTAssertEqual(movie.title, "Napoleon")
         XCTAssertFalse(movie.overview.isEmpty)
         XCTAssertEqual(movie.genreIds, [36, 10752, 18])
-        XCTAssertEqual(movie.posterPath, "/f1AQhx6ZfGhPZFTVKgxG91PhEYc.jpg")
+        XCTAssertEqual(movie.posterPath, "/jE5o7y9K6pZtWNNMEw3IdpHuncR.jpg")
         XCTAssertEqual(movie.popularity, 1529.676)
+    }
+    
+    func testDecodeGenres() throws {
+        let sut = DefaultMovieRepository(APIKey: "APIKey")
+        let data = genresExampleResponse
+            .data(using: .utf8)!
+        
+        let genres = try sut.decodeGenres(data: data)
+        
+        XCTAssertEqual(genres[28], "Action")
+        XCTAssertEqual(genres[12], "Adventure")
+        XCTAssertEqual(genres[16], "Animation")
     }
 }
 
-let exampleResponse = """
+let popularMoviesExampleResponse = """
 {
   "page": 1,
   "results": [
@@ -80,5 +105,15 @@ let exampleResponse = """
   ],
   "total_pages": 41950,
   "total_results": 838984
+}
+"""
+
+let genresExampleResponse = """
+{
+  "genres": [
+    {"id": 28, "name": "Action"},
+    {"id": 12, "name": "Adventure"},
+    {"id": 16, "name": "Animation"}
+  ]
 }
 """
