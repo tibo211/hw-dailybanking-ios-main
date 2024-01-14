@@ -9,25 +9,49 @@ import XCTest
 @testable import MovieData
 
 final class MovieRepositoryTests: XCTestCase {
-    func testURL_createTrending() {
-        let sut = DefaultMovieRepository(APIKey: "APIKEY")
+    private var mockURLSession: MockURLSession!
+    private var sut: DefaultMovieRepository!
+    
+    override func setUp() {
+        mockURLSession = MockURLSession()
+        sut = DefaultMovieRepository(APIKey: "APIKEY", urlSession: mockURLSession)
+    }
+    
+    func testFetchTrendingMovies_URL() async throws {
+        mockURLSession.expectedResponse = popularMoviesExampleResponse
 
-        let url = sut.url(for: .trending)
+        _ = try await sut.fetchTrendingMovies()
 
         let urlToExpect = URL(
             string: "https://api.themoviedb.org/3/trending/movie/day?api_key=APIKEY"
         )
-        XCTAssertEqual(url, urlToExpect)
+        XCTAssertEqual(mockURLSession.receivedURL, urlToExpect)
     }
     
-    func testURL_createGenres() {
-        let sut = DefaultMovieRepository(APIKey: "APIKEY")
+    func testFetchTrendingMovies_returnsTrendingMovies() async throws {
+        mockURLSession.expectedResponse = popularMoviesExampleResponse
         
-        let url = sut.url(for: .genres)
+        let results = try await sut.fetchTrendingMovies()
+        
+        XCTAssertEqual(results.count, 2)
+    }
+    
+    func testFetchGenres_URL() async throws {
+        mockURLSession.expectedResponse = genresExampleResponse
+
+        _ = try await sut.fetchGenres()
         
         let urlToExpect = URL(
             string: "https://api.themoviedb.org/3/genre/movie/list?api_key=APIKEY"
         )
-        XCTAssertEqual(url, urlToExpect)
+        XCTAssertEqual(mockURLSession.receivedURL, urlToExpect)
+    }
+    
+    func testFetchGenres_returnsGenres() async throws {
+        mockURLSession.expectedResponse = genresExampleResponse
+        
+        let results = try await sut.fetchGenres()
+        
+        XCTAssertEqual(results.count, 3)
     }
 }

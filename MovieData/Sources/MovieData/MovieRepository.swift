@@ -21,22 +21,24 @@ public protocol MovieRepository {
 // MARK: - Default implementation.
 
 final class DefaultMovieRepository: MovieRepository {
-    enum Endpoint: String {
+    private enum Endpoint: String {
         case trending = "/trending/movie/day"
         case genres = "/genre/movie/list"
     }
     
     private let apiKey: String
     private let baseURL = "https://api.themoviedb.org/3"
+    private let urlSession: URLSessionProtocol
     
-    init(APIKey: String) {
+    init(APIKey: String, urlSession: URLSessionProtocol = URLSession.shared) {
         self.apiKey = APIKey
+        self.urlSession = urlSession
     }
     
     func fetchTrendingMovies() async throws -> [Movie] {
         let url = url(for: .trending)
 
-        let (data, _) = try await URLSession.shared.data(from: url)
+        let (data, _) = try await urlSession.data(from: url)
 
         let results = try MovieDecoder.decode(data: data)
         return results
@@ -45,15 +47,17 @@ final class DefaultMovieRepository: MovieRepository {
     func fetchGenres() async throws -> [Int : String] {
         let url = url(for: .genres)
         
-        let (data, _) = try await URLSession.shared.data(from: url)
+        let (data, _) = try await urlSession.data(from: url)
         
         let results = try GenreDecoder.decode(data: data)
         return results
     }
 }
 
+// MARK: URL maker.
+
 extension DefaultMovieRepository {
-    func url(for endpoint: Endpoint) -> URL {
+    private func url(for endpoint: Endpoint) -> URL {
         var components = URLComponents(string: baseURL + endpoint.rawValue)
         
         components?.queryItems = [
