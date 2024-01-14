@@ -24,5 +24,9 @@ final class MockMovieServices: MovieServicesProtocol {
         return expectedFetchMoviesResults
     }
     
-    func updateMarks(by movie: MovieVM) {}
+    private(set) var updateMarksCallCount = 0
+    
+    func updateMarks(by movie: MovieVM) {
+        updateMarksCallCount += 1
+    }
 }

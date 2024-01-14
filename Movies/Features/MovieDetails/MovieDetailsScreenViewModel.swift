@@ -8,7 +8,7 @@
 import Foundation
 
 final class MovieDetailsScreenViewModel: ObservableObject, MovieDetailsScreenViewModelProtocol {
-    @Published var movie: MovieVM
+    @Published private(set) var movie: MovieVM
     private let movieServices: MovieServicesProtocol
 
     init(movie: MovieVM,

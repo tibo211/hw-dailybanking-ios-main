@@ -38,7 +38,7 @@ final class MoviesScreenViewModelTests: XCTestCase {
     }
 }
 
-private let exampleMovie = MovieVM(
+let exampleMovie = MovieVM(
     id: UUID().uuidString,
     title: "Monster Hunter",
     genres: "ACTION, FANTASY, THRILLER",

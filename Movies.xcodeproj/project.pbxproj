@@ -26,6 +26,7 @@
 		BB79543F2B535CF50071A9CC /* MovieServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB79543E2B535CF50071A9CC /* MovieServicesTests.swift */; };
 		BB7954412B5372420071A9CC /* MoviesScreenViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7954402B5372420071A9CC /* MoviesScreenViewModelTests.swift */; };
 		BB7954432B5373200071A9CC /* MockMovieServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7954422B5373200071A9CC /* MockMovieServices.swift */; };
+		BB7954462B537A870071A9CC /* MovieDetailsScreenViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7954452B537A870071A9CC /* MovieDetailsScreenViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		BB79543E2B535CF50071A9CC /* MovieServicesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieServicesTests.swift; sourceTree = "<group>"; };
 		BB7954402B5372420071A9CC /* MoviesScreenViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesScreenViewModelTests.swift; sourceTree = "<group>"; };
 		BB7954422B5373200071A9CC /* MockMovieServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMovieServices.swift; sourceTree = "<group>"; };
+		BB7954452B537A870071A9CC /* MovieDetailsScreenViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsScreenViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,8 +183,8 @@
 			isa = PBXGroup;
 			children = (
 				BB79543B2B535BE50071A9CC /* Mocks */,
+				BB7954442B537A5A0071A9CC /* Scenes */,
 				BB79543E2B535CF50071A9CC /* MovieServicesTests.swift */,
-				BB7954402B5372420071A9CC /* MoviesScreenViewModelTests.swift */,
 			);
 			path = MoviesTests;
 			sourceTree = "<group>";
@@ -194,6 +196,15 @@
 				BB7954422B5373200071A9CC /* MockMovieServices.swift */,
 			);
 			path = Mocks;
+			sourceTree = "<group>";
+		};
+		BB7954442B537A5A0071A9CC /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				BB7954402B5372420071A9CC /* MoviesScreenViewModelTests.swift */,
+				BB7954452B537A870071A9CC /* MovieDetailsScreenViewModelTests.swift */,
+			);
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -319,6 +330,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB7954432B5373200071A9CC /* MockMovieServices.swift in Sources */,
+				BB7954462B537A870071A9CC /* MovieDetailsScreenViewModelTests.swift in Sources */,
 				BB79543D2B535C000071A9CC /* MockMovieRepository.swift in Sources */,
 				BB79543F2B535CF50071A9CC /* MovieServicesTests.swift in Sources */,
 				BB7954412B5372420071A9CC /* MoviesScreenViewModelTests.swift in Sources */,
