@@ -5,9 +5,6 @@
 //  Created by Tibor Felföldy on 2024-01-13.
 //
 
-import InitMacro
-
-@Init
 public struct Movie: Decodable {
     public let id: Int
     public let title: String
@@ -22,5 +19,14 @@ public struct Movie: Decodable {
     
     public var largeImageLink: String {
         "https://image.tmdb.org/t/p/w500/\(posterPath)"
+    }
+    
+    public init(id: Int, title: String, overview: String, genreIds: [Int], voteAverage: Float, posterPath: String) {
+        self.id = id
+        self.title = title
+        self.overview = overview
+        self.genreIds = genreIds
+        self.voteAverage = voteAverage
+        self.posterPath = posterPath
     }
 }

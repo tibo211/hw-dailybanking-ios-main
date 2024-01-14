@@ -10,15 +10,8 @@ let package = Package(
         .library(name: "MovieData",
                  targets: ["MovieData"]),
     ],
-    dependencies: [
-        // InitMacro package to generate model initializers in compile time.
-        .package(
-            url: "https://github.com/LeonardoCardoso/InitMacro.git",
-            branch: "main"
-        ),
-    ],
     targets: [
-        .target(name: "MovieData", dependencies: ["InitMacro"]),
+        .target(name: "MovieData"),
         .testTarget(name: "MovieDataTests",
                     dependencies: ["MovieData"]),
     ]
