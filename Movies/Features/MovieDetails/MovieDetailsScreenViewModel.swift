@@ -7,12 +7,18 @@
 
 import Foundation
 
-class MovieDetailsScreenViewModel: ObservableObject, MovieDetailsScreenViewModelProtocol {
+final class MovieDetailsScreenViewModel: ObservableObject, MovieDetailsScreenViewModelProtocol {
     @Published var movie: MovieVM
+    private let movieServices: MovieServicesProtocol
 
-    init(movie: MovieVM) {
+    init(movie: MovieVM,
+         movieServices: MovieServicesProtocol = MovieServices.shared) {
         self.movie = movie
+        self.movieServices = movieServices
     }
 
-    func markMovie() {}
+    func markMovie() {
+        movie.isMarked.toggle()
+        movieServices.updateMarks(by: movie)
+    }
 }

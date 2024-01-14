@@ -7,10 +7,22 @@
 
 import MovieData
 import Foundation
+import Combine
 
-final class MovieServices {
+protocol MovieServicesProtocol {
+    var markedMoviesPublisher: PassthroughSubject<Set<MovieVM.ID>, Never> { get }
+    func fetchMovies() async throws -> [MovieVM]
+    func updateMarks(by movie: MovieVM)
+}
+
+final class MovieServices: MovieServicesProtocol {
+    static let shared = MovieServices()
+    
+    let markedMoviesPublisher = PassthroughSubject<Set<MovieVM.ID>, Never>()
+    
     private let repository: MovieRepository
     private let formatter: ListFormatter
+    private var markedMovies = Set<MovieVM.ID>()
     
     init(repository: MovieRepository = MovieData.createRepository(APIKey: APIkey),
          formatter: ListFormatter = ListFormatter()) {
@@ -26,6 +38,15 @@ final class MovieServices {
             .map { movie in
                 convert(movie: movie, genres: genres)
             }
+    }
+    
+    func updateMarks(by movie: MovieVM) {
+        if movie.isMarked {
+            markedMovies.insert(movie.id)
+        } else {
+            markedMovies.remove(movie.id)
+        }
+        markedMoviesPublisher.send(markedMovies)
     }
     
     func convert(movie: Movie, genres: [Int : String]) -> MovieVM {

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 public protocol MovieRepository {
     func fetchPopularMovies() async throws -> [Movie]
