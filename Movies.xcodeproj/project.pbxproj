@@ -183,8 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				BB79543B2B535BE50071A9CC /* Mocks */,
-				BB7954442B537A5A0071A9CC /* Scenes */,
-				BB79543E2B535CF50071A9CC /* MovieServicesTests.swift */,
+				BB7954442B537A5A0071A9CC /* Features */,
 			);
 			path = MoviesTests;
 			sourceTree = "<group>";
@@ -198,13 +197,38 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
-		BB7954442B537A5A0071A9CC /* Scenes */ = {
+		BB7954442B537A5A0071A9CC /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				BBE22A9E2B548A4B00DC9716 /* Services */,
+				BBE22A9D2B548A3300DC9716 /* MovieDetails */,
+				BBE22A9C2B548A1300DC9716 /* MovieList */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		BBE22A9C2B548A1300DC9716 /* MovieList */ = {
 			isa = PBXGroup;
 			children = (
 				BB7954402B5372420071A9CC /* MoviesScreenViewModelTests.swift */,
+			);
+			path = MovieList;
+			sourceTree = "<group>";
+		};
+		BBE22A9D2B548A3300DC9716 /* MovieDetails */ = {
+			isa = PBXGroup;
+			children = (
 				BB7954452B537A870071A9CC /* MovieDetailsScreenViewModelTests.swift */,
 			);
-			path = Scenes;
+			path = MovieDetails;
+			sourceTree = "<group>";
+		};
+		BBE22A9E2B548A4B00DC9716 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				BB79543E2B535CF50071A9CC /* MovieServicesTests.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -532,7 +556,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.felfoldy.MoviesTests;
@@ -557,7 +581,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.felfoldy.MoviesTests;
