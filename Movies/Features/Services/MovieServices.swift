@@ -9,10 +9,13 @@ import MovieData
 import Foundation
 
 final class MovieServices {
-    let repository: MovieRepository
+    private let repository: MovieRepository
+    private let formatter: ListFormatter
     
-    init(repository: MovieRepository = MovieData.createRepository(APIKey: APIkey)) {
+    init(repository: MovieRepository = MovieData.createRepository(APIKey: APIkey),
+         formatter: ListFormatter = ListFormatter()) {
         self.repository = repository
+        self.formatter = formatter
     }
     
     func fetchMovies() async throws -> [MovieVM] {
@@ -20,7 +23,9 @@ final class MovieServices {
         let movies = try await repository.fetchPopularMovies()
 
         return movies
-            .map { movie in convert(movie: movie, genres: genres) }
+            .map { movie in
+                convert(movie: movie, genres: genres)
+            }
     }
     
     func convert(movie: Movie, genres: [Int : String]) -> MovieVM {
@@ -29,11 +34,11 @@ final class MovieServices {
         return MovieVM(
             id: String(movie.id),
             title: movie.title,
-            genres: ListFormatter().string(from: genres) ?? "",
+            genres: formatter.string(from: genres) ?? "",
             overView: movie.overview,
             image: .init(small: movie.smallImageLink,
                          large: movie.largeImageLink),
-            popularity: movie.popularity,
+            popularity: movie.voteAverage,
             isMarked: false
         )
     }

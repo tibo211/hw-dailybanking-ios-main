@@ -5,12 +5,15 @@
 //  Created by Tibor Felföldy on 2024-01-13.
 //
 
+import InitMacro
+
+@Init
 public struct Movie: Decodable {
     public let id: Int
     public let title: String
     public let overview: String
     public let genreIds: [Int]
-    public let popularity: Float
+    public let voteAverage: Float
     let posterPath: String
     
     public var smallImageLink: String {

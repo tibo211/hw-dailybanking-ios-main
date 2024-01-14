@@ -50,7 +50,7 @@ final class MovieRepositoryTests: XCTestCase {
         XCTAssertFalse(movie.overview.isEmpty)
         XCTAssertEqual(movie.genreIds, [36, 10752, 18])
         XCTAssertEqual(movie.posterPath, "/jE5o7y9K6pZtWNNMEw3IdpHuncR.jpg")
-        XCTAssertEqual(movie.popularity, 1529.676)
+        XCTAssertEqual(movie.voteAverage, 6.5)
     }
     
     func testDecodeGenres() throws {
