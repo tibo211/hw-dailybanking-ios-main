@@ -11,7 +11,7 @@ import Combine
 
 protocol MovieServicesProtocol {
     /// Publishes a set of movie ids every time a movie was marked or the mark was removed.
-    var markedMoviesPublisher: PassthroughSubject<Set<MovieVM.ID>, Never> { get }
+    var markedMoviesPublisher: AnyPublisher<Set<MovieVM.ID>, Never> { get }
     
     /// Fetches the list of genres and the popular movies, then creates the movie list from the results.
     /// - Returns: Popular movies.
@@ -25,11 +25,13 @@ protocol MovieServicesProtocol {
 final class MovieServices: MovieServicesProtocol {
     static let shared = MovieServices()
     
-    let markedMoviesPublisher = PassthroughSubject<Set<MovieVM.ID>, Never>()
+    var markedMoviesPublisher: AnyPublisher<Set<MovieVM.ID>, Never> {
+        $markedMovies.eraseToAnyPublisher()
+    }
     
     private let repository: MovieRepository
     private let formatter: ListFormatter
-    private var markedMovies = Set<MovieVM.ID>()
+    @Published private var markedMovies = Set<MovieVM.ID>()
     
     init(repository: MovieRepository = MovieData.createRepository(APIKey: APIkey),
          formatter: ListFormatter = ListFormatter()) {
@@ -53,7 +55,6 @@ final class MovieServices: MovieServicesProtocol {
         } else {
             markedMovies.remove(movie.id)
         }
-        markedMoviesPublisher.send(markedMovies)
     }
 }
 
