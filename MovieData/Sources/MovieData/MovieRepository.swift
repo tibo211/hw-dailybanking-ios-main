@@ -38,7 +38,7 @@ final class DefaultMovieRepository: MovieRepository {
 
         let (data, _) = try await URLSession.shared.data(from: url)
 
-        let results = try decodeMovies(data: data)
+        let results = try MovieDecoder.decode(data: data)
         return results
     }
     
@@ -47,7 +47,7 @@ final class DefaultMovieRepository: MovieRepository {
         
         let (data, _) = try await URLSession.shared.data(from: url)
         
-        let results = try decodeGenres(data: data)
+        let results = try GenreDecoder.decode(data: data)
         return results
     }
 }
@@ -61,37 +61,5 @@ extension DefaultMovieRepository {
         ]
 
         return components!.url!
-    }
-}
-
-// MARK: - API Responses.
-
-private struct FetchPopularMoviesResponse: Decodable {
-    let results: [Movie]
-}
-
-private struct FetchGenresResponse: Decodable {
-    struct Genre: Decodable {
-        let id: Int
-        let name: String
-    }
-
-    let genres: [Genre]
-}
-
-// MARK: Decodings.
-
-extension DefaultMovieRepository {
-    func decodeMovies(data: Data) throws -> [Movie] {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let response = try decoder.decode(FetchPopularMoviesResponse.self, from: data)
-        return response.results
-    }
-    
-    func decodeGenres(data: Data) throws -> [Int : String] {
-        let response = try JSONDecoder().decode(FetchGenresResponse.self, from: data)
-        return Dictionary(grouping: response.genres, by: \.id)
-            .compactMapValues(\.first?.name)
     }
 }
