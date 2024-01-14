@@ -58,7 +58,7 @@ final class MovieServices: MovieServicesProtocol {
     }
 }
 
-extension MovieServices {
+private extension MovieServices {
     func convert(movie: Movie, genres: [Int : String]) -> MovieVM {
         let genres = movie.genreIds.compactMap { genres[$0] }
 

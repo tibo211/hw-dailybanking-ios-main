@@ -25,12 +25,19 @@ final class MovieServicesTests: XCTestCase {
         )
     }
     
-    func testConvert() {
-        let genres = [
+    func testFetchMovies_doAPICalls() async throws {
+        let movies = try await sut.fetchMovies()
+        
+        XCTAssertEqual(movieRepository.fetchGenresCallCount, 1)
+        XCTAssertEqual(movieRepository.fetchPopularMoviesCallCount, 1)
+    }
+    
+    func testFetchMovies_conversion() async throws {
+        movieRepository.expectedFetchGenres = [
             18 : "Drama",
             36 : "History"
         ]
-        
+
         let movie = Movie(
             id: 10,
             title: "Society of the Snow",
@@ -39,8 +46,14 @@ final class MovieServicesTests: XCTestCase {
             voteAverage: 8.1,
             posterPath: "/2e853FDVSIso600RqAMunPxiZjq.jpg"
         )
+        movieRepository.expectedPopularMoviesResult = [movie]
         
-        let movieVM = sut.convert(movie: movie, genres: genres)
+        let movies = try await sut.fetchMovies()
+        
+        guard let movieVM = movies.first else {
+            XCTFail("Missing movies")
+            return
+        }
         
         XCTAssertEqual(movieVM.id, String(movie.id))
         XCTAssertEqual(movieVM.title, movie.title)
@@ -49,12 +62,5 @@ final class MovieServicesTests: XCTestCase {
         XCTAssertEqual(movieVM.popularity, movie.voteAverage)
         XCTAssertEqual(movieVM.image.small, movie.smallImageLink)
         XCTAssertEqual(movieVM.image.large, movie.largeImageLink)
-    }
-    
-    func testFetchMovies_doAPICalls() async throws {
-        let movies = try await sut.fetchMovies()
-        
-        XCTAssertEqual(movieRepository.fetchGenresCallCount, 1)
-        XCTAssertEqual(movieRepository.fetchPopularMoviesCallCount, 1)
     }
 }
