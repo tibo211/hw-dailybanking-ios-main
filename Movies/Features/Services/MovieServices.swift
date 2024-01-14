@@ -10,8 +10,15 @@ import Foundation
 import Combine
 
 protocol MovieServicesProtocol {
+    /// Publishes a set of movie ids every time a movie was marked or the mark was removed.
     var markedMoviesPublisher: PassthroughSubject<Set<MovieVM.ID>, Never> { get }
+    
+    /// Fetches the list of genres and the popular movies, then creates the movie list from the results.
+    /// - Returns: Popular movies.
     func fetchMovies() async throws -> [MovieVM]
+
+    /// Notifies the marked movie set that the given  movie was updated.
+    /// - Parameter movie: `MovieVM` with updated `isMarked` property.
     func updateMarks(by movie: MovieVM)
 }
 
@@ -48,7 +55,9 @@ final class MovieServices: MovieServicesProtocol {
         }
         markedMoviesPublisher.send(markedMovies)
     }
-    
+}
+
+extension MovieServices {
     func convert(movie: Movie, genres: [Int : String]) -> MovieVM {
         let genres = movie.genreIds.compactMap { genres[$0] }
 

@@ -9,7 +9,12 @@ import Foundation
 import Combine
 
 public protocol MovieRepository {
+    /// Calls the TMDB API `/movie/popular`.
+    /// - Returns: The first page of the popular movies.
     func fetchPopularMovies() async throws -> [Movie]
+    
+    /// Calls the TMDB API `/genre/movie/list`.
+    /// - Returns: Dictionary where the key is the id and the value is the name of the genre.
     func fetchGenres() async throws -> [Int : String]
 }
 
