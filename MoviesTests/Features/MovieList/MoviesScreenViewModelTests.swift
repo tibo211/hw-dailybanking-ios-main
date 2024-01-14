@@ -25,7 +25,7 @@ final class MoviesScreenViewModelTests: XCTestCase {
         XCTAssertEqual(sut.movies.first?.id, exampleMovie.id)
     }
     
-    func testMoves_updatesWhenMarked() async throws {
+    func testMovies_updatesWhenMarked() async throws {
         var movie = exampleMovie
         services.expectedFetchMoviesResults = [movie]
 
