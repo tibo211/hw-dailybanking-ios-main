@@ -29,7 +29,7 @@ final class MovieServicesTests: XCTestCase {
         let movies = try await sut.fetchMovies()
         
         XCTAssertEqual(movieRepository.fetchGenresCallCount, 1)
-        XCTAssertEqual(movieRepository.fetchPopularMoviesCallCount, 1)
+        XCTAssertEqual(movieRepository.fetchTrendingMoviesCallCount, 1)
     }
     
     func testFetchMovies_conversion() async throws {
@@ -46,7 +46,7 @@ final class MovieServicesTests: XCTestCase {
             voteAverage: 8.1,
             posterPath: "/2e853FDVSIso600RqAMunPxiZjq.jpg"
         )
-        movieRepository.expectedPopularMoviesResult = [movie]
+        movieRepository.expectedTrendingMoviesResult = [movie]
         
         let movies = try await sut.fetchMovies()
         

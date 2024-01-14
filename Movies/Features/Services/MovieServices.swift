@@ -41,7 +41,7 @@ final class MovieServices: MovieServicesProtocol {
     
     func fetchMovies() async throws -> [MovieVM] {
         let genres = try await repository.fetchGenres()
-        let movies = try await repository.fetchPopularMovies()
+        let movies = try await repository.fetchTrendingMovies()
 
         return movies
             .map { movie in

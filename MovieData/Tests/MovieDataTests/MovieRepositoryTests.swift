@@ -9,13 +9,13 @@ import XCTest
 @testable import MovieData
 
 final class MovieRepositoryTests: XCTestCase {
-    func testURL_createPopular() {
+    func testURL_createTrending() {
         let sut = DefaultMovieRepository(APIKey: "APIKEY")
 
-        let url = sut.url(for: .popular)
+        let url = sut.url(for: .trending)
 
         let urlToExpect = URL(
-            string: "https://api.themoviedb.org/3/movie/popular?api_key=APIKEY"
+            string: "https://api.themoviedb.org/3/trending/movie/day?api_key=APIKEY"
         )
         XCTAssertEqual(url, urlToExpect)
     }
@@ -36,11 +36,11 @@ final class MovieRepositoryTests: XCTestCase {
         let data = popularMoviesExampleResponse
             .data(using: .utf8)!
         
-        let response = try sut.decodeMovies(data: data)
+        let results = try sut.decodeMovies(data: data)
         
-        XCTAssertEqual(response.results.count, 2)
+        XCTAssertEqual(results.count, 2)
         
-        guard let movie = response.results.first else {
+        guard let movie = results.first else {
             XCTFail("Missing results")
             return
         }

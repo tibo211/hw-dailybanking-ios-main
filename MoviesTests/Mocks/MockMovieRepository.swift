@@ -8,15 +8,15 @@
 import MovieData
 
 final class MockMovieRepository: MovieRepository {
-    private(set) var fetchPopularMoviesCallCount = 0
+    private(set) var fetchTrendingMoviesCallCount = 0
     private(set) var fetchGenresCallCount = 0
 
-    var expectedPopularMoviesResult = [Movie]()
+    var expectedTrendingMoviesResult = [Movie]()
     var expectedFetchGenres = [Int : String]()
     
-    func fetchPopularMovies() async throws -> [Movie] {
-        fetchPopularMoviesCallCount += 1
-        return expectedPopularMoviesResult
+    func fetchTrendingMovies() async throws -> [Movie] {
+        fetchTrendingMoviesCallCount += 1
+        return expectedTrendingMoviesResult
     }
     
     func fetchGenres() async throws -> [Int : String] {
